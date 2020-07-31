@@ -1,0 +1,717 @@
+[
+    {
+        "id": "b3c57471.42c698",
+        "type": "tab",
+        "label": "Weather Alert",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ffaed393.3baa5",
+        "type": "openweathermap in",
+        "z": "b3c57471.42c698",
+        "name": "Weather",
+        "wtype": "current",
+        "lon": "-91",
+        "lat": "31",
+        "city": "",
+        "country": "",
+        "language": "en",
+        "x": 140,
+        "y": 260,
+        "wires": [
+            [
+                "c94154e2.99e798"
+            ]
+        ]
+    },
+    {
+        "id": "22510a97.fa9bc6",
+        "type": "function",
+        "z": "b3c57471.42c698",
+        "name": "Weather ID",
+        "func": "var msg1 = { payload: msg.payload.id };\nreturn msg1;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 260,
+        "wires": [
+            [
+                "492ab71f.a0a6e8"
+            ]
+        ]
+    },
+    {
+        "id": "492ab71f.a0a6e8",
+        "type": "switch",
+        "z": "b3c57471.42c698",
+        "name": "Tornado",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "781",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 720,
+        "y": 260,
+        "wires": [
+            [
+                "4a9fea29.17e0c4",
+                "2aa8680c.7428e8"
+            ]
+        ]
+    },
+    {
+        "id": "c94154e2.99e798",
+        "type": "api-current-state",
+        "z": "b3c57471.42c698",
+        "name": "Home?",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "home",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "person.nightshade",
+        "state_type": "str",
+        "state_location": "",
+        "override_payload": "none",
+        "entity_location": "",
+        "override_data": "none",
+        "blockInputOverrides": false,
+        "x": 320,
+        "y": 260,
+        "wires": [
+            [
+                "22510a97.fa9bc6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4a9fea29.17e0c4",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "Switched lights On",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.light, switch.lamp",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 450,
+        "y": 360,
+        "wires": [
+            [
+                "43afefd5.987b7"
+            ]
+        ]
+    },
+    {
+        "id": "87cf3f53.5d8ee",
+        "type": "delay",
+        "z": "b3c57471.42c698",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 200,
+        "y": 520,
+        "wires": [
+            [
+                "37bd2e46.c9dfc2"
+            ]
+        ]
+    },
+    {
+        "id": "43afefd5.987b7",
+        "type": "delay",
+        "z": "b3c57471.42c698",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 200,
+        "y": 440,
+        "wires": [
+            [
+                "6ffac7ee.260d58"
+            ]
+        ]
+    },
+    {
+        "id": "6ffac7ee.260d58",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "Toggle switches",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "toggle",
+        "entityId": "switch.light, switch.lamp",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 440,
+        "y": 440,
+        "wires": [
+            [
+                "87cf3f53.5d8ee"
+            ]
+        ]
+    },
+    {
+        "id": "b27c54b8.fba618",
+        "type": "delay",
+        "z": "b3c57471.42c698",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 200,
+        "y": 600,
+        "wires": [
+            [
+                "82cfd922.2f20f8"
+            ]
+        ]
+    },
+    {
+        "id": "841bda95.077328",
+        "type": "delay",
+        "z": "b3c57471.42c698",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 200,
+        "y": 680,
+        "wires": [
+            [
+                "19b75f5a.722de1"
+            ]
+        ]
+    },
+    {
+        "id": "56472e33.92941",
+        "type": "delay",
+        "z": "b3c57471.42c698",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 200,
+        "y": 760,
+        "wires": [
+            [
+                "9eb49ab7.004548"
+            ]
+        ]
+    },
+    {
+        "id": "9eb49ab7.004548",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "Switches Off",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_off",
+        "entityId": "switch.light",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 430,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a15e202f.22c2",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "RGB Toggle",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "light.rgb_lights",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 930,
+        "y": 440,
+        "wires": [
+            [
+                "e081199f.f115d8"
+            ]
+        ]
+    },
+    {
+        "id": "9b15ca90.d73958",
+        "type": "delay",
+        "z": "b3c57471.42c698",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 700,
+        "y": 440,
+        "wires": [
+            [
+                "a15e202f.22c2"
+            ]
+        ]
+    },
+    {
+        "id": "fc517f68.fc063",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "RGB Toggle",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "light.rgb_lights",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 930,
+        "y": 520,
+        "wires": [
+            [
+                "2cd7bf5d.58731"
+            ]
+        ]
+    },
+    {
+        "id": "e081199f.f115d8",
+        "type": "delay",
+        "z": "b3c57471.42c698",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 700,
+        "y": 520,
+        "wires": [
+            [
+                "fc517f68.fc063"
+            ]
+        ]
+    },
+    {
+        "id": "621442fe.26406c",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "RGB Toggle",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "light.rgb_lights",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 930,
+        "y": 600,
+        "wires": [
+            [
+                "ffbc1c91.9dee3"
+            ]
+        ]
+    },
+    {
+        "id": "2cd7bf5d.58731",
+        "type": "delay",
+        "z": "b3c57471.42c698",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 700,
+        "y": 600,
+        "wires": [
+            [
+                "621442fe.26406c"
+            ]
+        ]
+    },
+    {
+        "id": "cfb0c8f4.212618",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "RGB off",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_off",
+        "entityId": "light.rgb_lights",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 920,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "32eb9719.b31768",
+        "type": "delay",
+        "z": "b3c57471.42c698",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 700,
+        "y": 760,
+        "wires": [
+            [
+                "cfb0c8f4.212618"
+            ]
+        ]
+    },
+    {
+        "id": "cb150b97.a5eb38",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "RGB Color Red",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.rgb_lights",
+        "data": "{\"brightness\":\"255\",\"rgb_color\":[255,0,0],\"white_value\":\"0\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 940,
+        "y": 680,
+        "wires": [
+            [
+                "32eb9719.b31768"
+            ]
+        ]
+    },
+    {
+        "id": "ffbc1c91.9dee3",
+        "type": "delay",
+        "z": "b3c57471.42c698",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 700,
+        "y": 680,
+        "wires": [
+            [
+                "cb150b97.a5eb38"
+            ]
+        ]
+    },
+    {
+        "id": "3fef8479.46db9c",
+        "type": "inject",
+        "z": "b3c57471.42c698",
+        "name": "Test Button",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "4a9fea29.17e0c4",
+                "2aa8680c.7428e8"
+            ]
+        ]
+    },
+    {
+        "id": "37bd2e46.c9dfc2",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "Toggle switches",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "toggle",
+        "entityId": "switch.light, switch.lamp",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 440,
+        "y": 520,
+        "wires": [
+            [
+                "b27c54b8.fba618"
+            ]
+        ]
+    },
+    {
+        "id": "82cfd922.2f20f8",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "Toggle switches",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "toggle",
+        "entityId": "switch.light, switch.lamp",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 440,
+        "y": 600,
+        "wires": [
+            [
+                "841bda95.077328"
+            ]
+        ]
+    },
+    {
+        "id": "19b75f5a.722de1",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "Toggle switches",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "toggle",
+        "entityId": "switch.light, switch.lamp",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 440,
+        "y": 680,
+        "wires": [
+            [
+                "56472e33.92941"
+            ]
+        ]
+    },
+    {
+        "id": "2aa8680c.7428e8",
+        "type": "api-call-service",
+        "z": "b3c57471.42c698",
+        "name": "RGB Bulbs On",
+        "server": "9326a579.a85e78",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.rgb_lights",
+        "data": "{\"brightness\":\"1\",\"rgb_color\":[0,0,0],\"white_value\":\"255\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 940,
+        "y": 380,
+        "wires": [
+            [
+                "9b15ca90.d73958"
+            ]
+        ]
+    },
+    {
+        "id": "79017fc9.a0327",
+        "type": "comment",
+        "z": "b3c57471.42c698",
+        "name": "This is currenty set to Tornado, you will want to set yours based on the bad weather you are worried about.",
+        "info": "",
+        "x": 1000,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "170e5fb5.d0926",
+        "type": "comment",
+        "z": "b3c57471.42c698",
+        "name": "https://openweathermap.org/weather-conditions",
+        "info": "",
+        "x": 1020,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "be0c9a86.cdf368",
+        "type": "comment",
+        "z": "b3c57471.42c698",
+        "name": "For multiple alerts set multiple fields and run them into the triggers or set ranges between.",
+        "info": "",
+        "x": 970,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "d020c69c.c2af98",
+        "type": "comment",
+        "z": "b3c57471.42c698",
+        "name": "You will have to set your API key for OpenWeatherMap.org and configure for your server.",
+        "info": "",
+        "x": 340,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "75b9f140.0782e",
+        "type": "comment",
+        "z": "b3c57471.42c698",
+        "name": "My lights are on Sonoff switches as well as Tuya based bulbs all which have been flashed to ESPHome.  ",
+        "info": "",
+        "x": 390,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "ece8cbb3.d86238",
+        "type": "comment",
+        "z": "b3c57471.42c698",
+        "name": "Because of this I have to split between two control functions but anything that is a light or a switch can be controlled in a group.",
+        "info": "",
+        "x": 460,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "9326a579.a85e78",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "legacy": false,
+        "addon": false,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true
+    }
+]
